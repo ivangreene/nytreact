@@ -7,7 +7,7 @@ class Field extends Component {
         <label className="control">
           <h3 className="label">{this.props.label}</h3>
           {this.props.children ||
-            <input className="input" type={this.props.type || 'text'} placeholder={this.props.placeholder} />
+            <input {...this.props} className="input" type={this.props.type || 'text'} />
           }
         </label>
       </div>

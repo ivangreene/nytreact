@@ -19,11 +19,7 @@ class App extends Component {
             { name: 'Saved Articles', path: '/' },
             { name: 'Search', path: '/search' }
             ]} />
-          <Route path="/search" render={() => <Container title="Search">
-            <Search />
-          </Container>} />
-          <Route path="/search/results" render={() => <Container title="Results">
-          </Container>} />
+          <Route path="/search" render={() => <Search />} />
           <Route path="/" render={() => <Container title="Saved Articles">
           </Container>} />
         </div>

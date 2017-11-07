@@ -4,6 +4,7 @@ global.appRoot = __dirname;
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '127.0.0.1';
 
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
@@ -19,4 +20,4 @@ app.use(bodyParser.json());
 
 app.use(require('./routes')(express));
 
-httpServer.listen(PORT, () => console.log(`Now listening on ${PORT}`));
+httpServer.listen(PORT, HOST, () => console.log(`Now listening on ${HOST}:${PORT}`));

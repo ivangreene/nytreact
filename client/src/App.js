@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Container from './components/Container';
 import Search from './components/Search';
 import Navtabs from './components/Navtabs';
+import SavedArticles from './components/SavedArticles';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
             ]} />
           <Route path="/search" render={() => <Search />} />
           <Route path="/" render={() => <Container title="Saved Articles">
+            <SavedArticles />
           </Container>} />
         </div>
       </Router>

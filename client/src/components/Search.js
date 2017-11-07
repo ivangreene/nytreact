@@ -3,7 +3,7 @@ import axios from 'axios';
 import Field from './form/Field';
 import Container from './Container';
 import Results from './Results';
-import dummyData from '../dummyData.json';
+// import dummyData from '../dummyData.json';
 
 const currentYear = (new Date()).getFullYear();
 var years = [];
@@ -16,8 +16,13 @@ class Search extends Component {
     query: '',
     beginDate: (currentYear - 3),
     endDate: currentYear,
-    articles: dummyData,
+    articles: [], // dummyData,
     loading: false
+  };
+
+  saveArticle = article => {
+    let thumbnail = article.multimedia.filter(media => media.subtype === 'thumbnail').map(media => media.url)[0];
+    return axios.post('/api/article', { title: article.headline.main, snippet: article.snippet, url: article.web_url, thumbnail });
   };
 
   search = event => {
@@ -28,7 +33,7 @@ class Search extends Component {
       this.setState({ articles: results.data.response.docs, loading: false });
     })
     .catch(error => console.error(error));
-  }
+  };
 
   handleInputChange = event => {
     this.setState({
@@ -41,7 +46,7 @@ class Search extends Component {
       <div>
         <Container title="Search">
           <form onSubmit={this.search} >
-            <Field placeholder="Topic" label="Topic" type="search" onChange={this.handleInputChange} name="query" />
+            <Field placeholder="Topic" label="Topic" autoFocus type="search" onChange={this.handleInputChange} name="query" />
             <div className="field is-grouped is-pulled-left">
               <label className="control">
                 <h3 className="label">From</h3>
@@ -71,7 +76,7 @@ class Search extends Component {
           </form>
         </Container>
         { !!this.state.articles.length && <Container title="Results">
-          <Results articles={this.state.articles} />
+          <Results articles={this.state.articles} save={this.saveArticle} />
         </Container>}
       </div>
     );

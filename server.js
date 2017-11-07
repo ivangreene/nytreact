@@ -1,9 +1,22 @@
 require('dotenv').config();
-const express = require('express');
+const path = require('path');
+global.appRoot = __dirname;
 
+const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 3000;
+
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useMongoClient: true });
+
+const bodyParser = require('body-parser');
+const express = require('express');
 const app = express();
+const httpServer = require('http').Server(app);
+global.socketio = require('socket.io')(httpServer);
+
+app.use(bodyParser.json());
 
 app.use(require('./routes')(express));
 
-app.listen(PORT, () => console.log(`Now listening on ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Now listening on ${PORT}`));
